@@ -27,6 +27,17 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        .reset-button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #dc3545; /* Bootstrap red */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px; /* Add space below the button */
+        }
+
         .tracker-item {
             display: flex;
             justify-content: space-between;
@@ -135,10 +146,13 @@
 <body>
 
     <div class="tracker">
+        <!-- Zero Everything Out Button -->
+        <button class="reset-button" onclick="resetData()">Zero Everything Out</button>
+
         <!-- Name Dropdown -->
         <div class="tracker-item">
             <span>Select Name</span>
-            <select id="name">
+            <select id="name" onchange="saveData()">
                 <option value="Evan">Evan</option>
                 <option value="Derek">Derek</option>
                 <option value="Paul">Paul</option>
@@ -218,7 +232,7 @@
         <!-- Commission Earned -->
         <div class="tracker-item">
             <span>Commission Earned</span>
-            <input type="text" id="commissionEarned" placeholder="Enter Amount" onblur="formatCurrency(this)">
+            <input type="text" id="commissionEarned" placeholder="Enter Amount" onblur="formatCurrency(this)" oninput="saveData()">
         </div>
 
         <!-- Submit Button -->
@@ -232,11 +246,57 @@
     </div>
 
     <script>
+        // Load saved data from localStorage
+        window.onload = function() {
+            const savedData = JSON.parse(localStorage.getItem('trackerData')) || {};
+            document.getElementById('calls').textContent = savedData.calls || 0;
+            document.getElementById('contacts').textContent = savedData.contacts || 0;
+            document.getElementById('appointmentsSet').textContent = savedData.appointmentsSet || 0;
+            document.getElementById('appointmentsComplete').textContent = savedData.appointmentsComplete || 0;
+            document.getElementById('listingsTaken').textContent = savedData.listingsTaken || 0;
+            document.getElementById('underContract').textContent = savedData.underContract || 0;
+            document.getElementById('closedDeals').textContent = savedData.closedDeals || 0;
+            document.getElementById('commissionEarned').value = savedData.commissionEarned || '';
+            document.getElementById('name').value = savedData.name || 'Evan'; // Default name
+        };
+
+        function saveData() {
+            const data = {
+                calls: document.getElementById('calls').textContent,
+                contacts: document.getElementById('contacts').textContent,
+                appointmentsSet: document.getElementById('appointmentsSet').textContent,
+                appointmentsComplete: document.getElementById('appointmentsComplete').textContent,
+                listingsTaken: document.getElementById('listingsTaken').textContent,
+                underContract: document.getElementById('underContract').textContent,
+                closedDeals: document.getElementById('closedDeals').textContent,
+                commissionEarned: document.getElementById('commissionEarned').value,
+                name: document.getElementById('name').value,
+            };
+            localStorage.setItem('trackerData', JSON.stringify(data));
+        }
+
+        function resetData() {
+            if (confirm("Are you sure you want to reset all data? This action cannot be undone.")) {
+                document.getElementById('calls').textContent = 0;
+                document.getElementById('contacts').textContent = 0;
+                document.getElementById('appointmentsSet').textContent = 0;
+                document.getElementById('appointmentsComplete').textContent = 0;
+                document.getElementById('listingsTaken').textContent = 0;
+                document.getElementById('underContract').textContent = 0;
+                document.getElementById('closedDeals').textContent = 0;
+                document.getElementById('commissionEarned').value = '';
+                
+                // Clear localStorage
+                localStorage.removeItem('trackerData');
+            }
+        }
+
         function increment(id, button) {
             const element = document.getElementById(id);
             let value = parseInt(element.textContent);
             element.textContent = value + 1;
             enlargeButton(button);
+            saveData(); // Save data after increment
         }
 
         function decrement(id, button) {
@@ -245,6 +305,7 @@
             if (value > 0) {
                 element.textContent = value - 1;
                 enlargeButton(button);
+                saveData(); // Save data after decrement
             }
         }
 
@@ -263,6 +324,7 @@
             } else {
                 input.value = '';
             }
+            saveData(); // Save data after formatting
         }
 
         function submitData() {
