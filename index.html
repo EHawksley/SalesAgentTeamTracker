@@ -49,6 +49,7 @@
             cursor: pointer;
             background: none;
             border: none;
+            transition: transform 0.1s; /* Transition for smooth scaling */
         }
 
         .arrow.up {
@@ -59,17 +60,19 @@
             color: red;
         }
 
-        .arrow:focus {
-            outline: none;
+        .arrow.enlarged {
+            transform: scale(1.5); /* Enlarge on click */
         }
 
         input[type="number"],
         select {
             width: 100%;
+            max-width: 200px; /* Set a max width for inputs and selects */
             font-size: 16px;
             padding: 8px;
             margin-top: 10px;
             box-sizing: border-box;
+            text-align: right; /* Align text to the right */
         }
 
         button {
@@ -137,9 +140,9 @@
         <div class="tracker-item">
             <span>Calls</span>
             <div class="controls">
-                <button class="arrow up" onclick="increment('calls')">▲</button>
+                <button class="arrow up" onclick="increment('calls', this)">▲</button>
                 <span id="calls">0</span>
-                <button class="arrow down" onclick="decrement('calls')">▼</button>
+                <button class="arrow down" onclick="decrement('calls', this)">▼</button>
             </div>
         </div>
 
@@ -147,9 +150,9 @@
         <div class="tracker-item">
             <span>Contacts</span>
             <div class="controls">
-                <button class="arrow up" onclick="increment('contacts')">▲</button>
+                <button class="arrow up" onclick="increment('contacts', this)">▲</button>
                 <span id="contacts">0</span>
-                <button class="arrow down" onclick="decrement('contacts')">▼</button>
+                <button class="arrow down" onclick="decrement('contacts', this)">▼</button>
             </div>
         </div>
 
@@ -157,9 +160,9 @@
         <div class="tracker-item">
             <span>Appointments Set</span>
             <div class="controls">
-                <button class="arrow up" onclick="increment('appointmentsSet')">▲</button>
+                <button class="arrow up" onclick="increment('appointmentsSet', this)">▲</button>
                 <span id="appointmentsSet">0</span>
-                <button class="arrow down" onclick="decrement('appointmentsSet')">▼</button>
+                <button class="arrow down" onclick="decrement('appointmentsSet', this)">▼</button>
             </div>
         </div>
 
@@ -167,9 +170,9 @@
         <div class="tracker-item">
             <span>Appointments Complete</span>
             <div class="controls">
-                <button class="arrow up" onclick="increment('appointmentsComplete')">▲</button>
+                <button class="arrow up" onclick="increment('appointmentsComplete', this)">▲</button>
                 <span id="appointmentsComplete">0</span>
-                <button class="arrow down" onclick="decrement('appointmentsComplete')">▼</button>
+                <button class="arrow down" onclick="decrement('appointmentsComplete', this)">▼</button>
             </div>
         </div>
 
@@ -177,9 +180,9 @@
         <div class="tracker-item">
             <span>Listings Taken</span>
             <div class="controls">
-                <button class="arrow up" onclick="increment('listingsTaken')">▲</button>
+                <button class="arrow up" onclick="increment('listingsTaken', this)">▲</button>
                 <span id="listingsTaken">0</span>
-                <button class="arrow down" onclick="decrement('listingsTaken')">▼</button>
+                <button class="arrow down" onclick="decrement('listingsTaken', this)">▼</button>
             </div>
         </div>
 
@@ -187,9 +190,9 @@
         <div class="tracker-item">
             <span>Under Contract</span>
             <div class="controls">
-                <button class="arrow up" onclick="increment('underContract')">▲</button>
+                <button class="arrow up" onclick="increment('underContract', this)">▲</button>
                 <span id="underContract">0</span>
-                <button class="arrow down" onclick="decrement('underContract')">▼</button>
+                <button class="arrow down" onclick="decrement('underContract', this)">▼</button>
             </div>
         </div>
 
@@ -197,9 +200,9 @@
         <div class="tracker-item">
             <span>Closed Deals</span>
             <div class="controls">
-                <button class="arrow up" onclick="increment('closedDeals')">▲</button>
+                <button class="arrow up" onclick="increment('closedDeals', this)">▲</button>
                 <span id="closedDeals">0</span>
-                <button class="arrow down" onclick="decrement('closedDeals')">▼</button>
+                <button class="arrow down" onclick="decrement('closedDeals', this)">▼</button>
             </div>
         </div>
 
@@ -220,18 +223,27 @@
     </div>
 
     <script>
-        function increment(id) {
+        function increment(id, button) {
             const element = document.getElementById(id);
             let value = parseInt(element.textContent);
             element.textContent = value + 1;
+            enlargeButton(button);
         }
 
-        function decrement(id) {
+        function decrement(id, button) {
             const element = document.getElementById(id);
             let value = parseInt(element.textContent);
             if (value > 0) {
                 element.textContent = value - 1;
+                enlargeButton(button);
             }
+        }
+
+        function enlargeButton(button) {
+            button.classList.add('enlarged');
+            setTimeout(() => {
+                button.classList.remove('enlarged');
+            }, 100); // Duration for the enlargement effect
         }
 
         function submitData() {
@@ -289,4 +301,3 @@
 
 </body>
 </html>
-
