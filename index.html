@@ -50,6 +50,7 @@
             background: none;
             border: none;
             transition: transform 0.1s; /* Transition for smooth scaling */
+            outline: none; /* Remove focus outline */
         }
 
         .arrow.up {
@@ -208,8 +209,8 @@
 
         <!-- Commission Earned -->
         <div class="tracker-item">
-            <span>Commission Earned ($)</span>
-            <input type="number" id="commissionEarned" placeholder="Enter Amount">
+            <span>Commission Earned</span>
+            <input type="text" id="commissionEarned" placeholder="Enter Amount" oninput="formatCurrency(this)">
         </div>
 
         <!-- Submit Button -->
@@ -244,6 +245,15 @@
             setTimeout(() => {
                 button.classList.remove('enlarged');
             }, 100); // Duration for the enlargement effect
+        }
+
+        function formatCurrency(input) {
+            let value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            if (value) {
+                input.value = '$' + parseFloat(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            } else {
+                input.value = '';
+            }
         }
 
         function submitData() {
