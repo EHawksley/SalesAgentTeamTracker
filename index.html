@@ -254,9 +254,10 @@
         }
 
         function formatCurrency(input) {
-            let value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            let value = input.value.replace(/[^0-9.]/g, ''); // Allow decimal points
             if (value) {
-                input.value = '$' + parseFloat(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const numberValue = parseFloat(value);
+                input.value = '$' + numberValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             } else {
                 input.value = '';
             }
