@@ -65,7 +65,7 @@
             transform: scale(1.5); /* Enlarge on click */
         }
 
-        input[type="number"],
+        input[type="text"],
         select {
             width: 100%;
             max-width: 200px; /* Set a max width for inputs and selects */
@@ -210,7 +210,7 @@
         <!-- Commission Earned -->
         <div class="tracker-item">
             <span>Commission Earned</span>
-            <input type="text" id="commissionEarned" placeholder="Enter Amount" oninput="formatCurrency(this)">
+            <input type="text" id="commissionEarned" placeholder="Enter Amount" onblur="formatCurrency(this)">
         </div>
 
         <!-- Submit Button -->
@@ -311,3 +311,4 @@
 
 </body>
 </html>
+
