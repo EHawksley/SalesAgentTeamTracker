@@ -12,12 +12,19 @@
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
+            margin: 0;
         }
 
         .tracker {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            width: 100%;
+            max-width: 400px; /* Restricting max width for larger screens */
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .tracker-item {
@@ -33,7 +40,8 @@
         }
 
         .tracker-item span {
-            font-size: 24px;
+            font-size: 18px;
+            flex: 1;
         }
 
         .arrow {
@@ -55,25 +63,60 @@
             outline: none;
         }
 
-        input[type="number"] {
-            width: 150px;
-            font-size: 20px;
-        }
-
+        input[type="number"],
         select {
-            width: 150px;
-            font-size: 18px;
+            width: 100%;
+            font-size: 16px;
+            padding: 8px;
+            margin-top: 10px;
+            box-sizing: border-box;
         }
 
         button {
-            padding: 10px 20px;
+            width: 100%;
+            padding: 12px;
             font-size: 16px;
             cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
 
         #statusMessage {
             margin-top: 20px;
             font-size: 18px;
+            text-align: center;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .tracker {
+                gap: 15px;
+            }
+
+            .tracker-item span {
+                font-size: 16px;
+            }
+
+            .arrow {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -167,7 +210,7 @@
         </div>
 
         <!-- Submit Button -->
-        <div>
+        <div class="submit-container">
             <button onclick="submitData()">Submit</button>
         </div>
 
@@ -246,3 +289,4 @@
 
 </body>
 </html>
+
