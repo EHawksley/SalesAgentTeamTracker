@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .tracker {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tracker-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tracker-item span {
+            font-size: 24px;
+        }
+
+        .arrow {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .arrow.up {
+            color: green;
+        }
+
+        .arrow.down {
+            color: red;
+        }
+
+        .arrow:focus {
+            outline: none;
+        }
+
+        input[type="number"] {
+            width: 150px;
+            font-size: 20px;
+        }
+
+        select {
+            width: 150px;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #statusMessage {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tracker">
+        <!-- Name Dropdown -->
+        <div class="tracker-item">
+            <span>Select Name</span>
+            <select id="name">
+                <option value="Evan">Evan</option>
+                <option value="Derrek">Derrek</option>
+                <option value="Paul">Paul</option>
+            </select>
+        </div>
+
+        <!-- Calls -->
+        <div class="tracker-item">
+            <span>Calls</span>
+            <div class="controls">
+                <button class="arrow up" onclick="increment('calls')">▲</button>
+                <span id="calls">0</span>
+                <button class="arrow down" onclick="decrement('calls')">▼</button>
+            </div>
+        </div>
+
+        <!-- Contacts -->
+        <div class="tracker-item">
+            <span>Contacts</span>
+            <div class="controls">
+                <button class="arrow up" onclick="increment('contacts')">▲</button>
+                <span id="contacts">0</span>
+                <button class="arrow down" onclick="decrement('contacts')">▼</button>
+            </div>
+        </div>
+
+        <!-- Appointments Set -->
+        <div class="tracker-item">
+            <span>Appointments Set</span>
+            <div class="controls">
+                <button class="arrow up" onclick="increment('appointmentsSet')">▲</button>
+                <span id="appointmentsSet">0</span>
+                <button class="arrow down" onclick="decrement('appointmentsSet')">▼</button>
+            </div>
+        </div>
+
+        <!-- Appointments Complete -->
+        <div class="tracker-item">
+            <span>Appointments Complete</span>
+            <div class="controls">
+                <button class="arrow up" onclick="increment('appointmentsComplete')">▲</button>
+                <span id="appointmentsComplete">0</span>
+                <button class="arrow down" onclick="decrement('appointmentsComplete')">▼</button>
+            </div>
+        </div>
+
+        <!-- Listings Taken -->
+        <div class="tracker-item">
+            <span>Listings Taken</span>
+            <div class="controls">
+                <button class="arrow up" onclick="increment('listingsTaken')">▲</button>
+                <span id="listingsTaken">0</span>
+                <button class="arrow down" onclick="decrement('listingsTaken')">▼</button>
+            </div>
+        </div>
+
+        <!-- Under Contract -->
+        <div class="tracker-item">
+            <span>Under Contract</span>
+            <div class="controls">
+                <button class="arrow up" onclick="increment('underContract')">▲</button>
+                <span id="underContract">0</span>
+                <button class="arrow down" onclick="decrement('underContract')">▼</button>
+            </div>
+        </div>
+
+        <!-- Closed Deals -->
+        <div class="tracker-item">
+            <span>Closed Deals</span>
+            <div class="controls">
+                <button class="arrow up" onclick="increment('closedDeals')">▲</button>
+                <span id="closedDeals">0</span>
+                <button class="arrow down" onclick="decrement('closedDeals')">▼</button>
+            </div>
+        </div>
+
+        <!-- Commission Earned -->
+        <div class="tracker-item">
+            <span>Commission Earned ($)</span>
+            <input type="number" id="commissionEarned" placeholder="Enter Amount">
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button onclick="submitData()">Submit</button>
+        </div>
+
+        <!-- Status Message -->
+        <div id="statusMessage"></div>
+
+    </div>
+
+    <script>
+        function increment(id) {
+            const element = document.getElementById(id);
+            let value = parseInt(element.textContent);
+            element.textContent = value + 1;
+        }
+
+        function decrement(id) {
+            const element = document.getElementById(id);
+            let value = parseInt(element.textContent);
+            if (value > 0) {
+                element.textContent = value - 1;
+            }
+        }
+
+        function submitData() {
+            const name = document.getElementById('name').value;
+            const calls = document.getElementById('calls').textContent;
+            const contacts = document.getElementById('contacts').textContent;
+            const appointmentsSet = document.getElementById('appointmentsSet').textContent;
+            const appointmentsComplete = document.getElementById('appointmentsComplete').textContent;
+            const listingsTaken = document.getElementById('listingsTaken').textContent;
+            const underContract = document.getElementById('underContract').textContent;
+            const closedDeals = document.getElementById('closedDeals').textContent;
+            const commissionEarned = document.getElementById('commissionEarned').value;
+
+            // Get the current date and time
+            const currentDate = new Date();
+            const date = currentDate.toLocaleDateString();
+            const time = currentDate.toLocaleTimeString();
+
+            // Send this data to Google Sheets (or a backend)
+            const data = {
+                name,
+                date,
+                time,
+                calls,
+                contacts,
+                appointmentsSet,
+                appointmentsComplete,
+                listingsTaken,
+                underContract,
+                closedDeals,
+                commissionEarned
+            };
+
+            fetch('https://script.google.com/macros/s/AKfycbwFDXlkkSfPD7etwBVfCoEpMz894v7DMS5mKMI-cmxNLYGnbfI_GWCzdSKHBjsi2u7Y/exec', {
+                method: 'POST',
+                mode: 'no-cors',  // Bypass CORS issue
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                const statusMessage = document.getElementById('statusMessage');
+                statusMessage.textContent = `Submission Successful! Submitted on ${date} at ${time}.`;
+                statusMessage.style.color = "green";
+            })
+            .catch(error => {
+                const statusMessage = document.getElementById('statusMessage');
+                statusMessage.textContent = 'Submission failed. Please try again.';
+                statusMessage.style.color = "red";
+                console.error('Error:', error);
+            });
+        }
+    </script>
+
+</body>
+</html>
