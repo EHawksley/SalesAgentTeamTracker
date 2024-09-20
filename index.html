@@ -29,7 +29,7 @@
 
         .button-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             margin-bottom: 20px;
         }
 
@@ -60,17 +60,101 @@
             margin-bottom: 10px; /* Add space below the button */
         }
 
-        /* Other styles remain unchanged... */
+        .tracker-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        /* Your existing styles... */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center; /* Center controls */
+        }
+
+        .tracker-item span {
+            font-size: 18px;
+            flex: 1;
+            text-align: left; /* Align label text to the left */
+        }
+
+        .arrow {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: transform 0.1s; /* Transition for smooth scaling */
+            outline: none; /* Remove focus outline */
+        }
+
+        .arrow.up {
+            color: green;
+        }
+
+        .arrow.down {
+            color: red;
+        }
+
+        .arrow.enlarged {
+            transform: scale(1.5); /* Enlarge on click */
+        }
+
+        /* Remove blue highlighting on hover */
+        .arrow:hover {
+            background: none; /* No background on hover */
+            outline: none; /* No outline on hover */
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            max-width: 200px; /* Set a max width for inputs and selects */
+            font-size: 16px;
+            padding: 8px;
+            margin-top: 10px;
+            box-sizing: border-box;
+            text-align: center; /* Center the input text */
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #statusMessage {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .tracker {
+                gap: 15px;
+            }
+
+            .tracker-item span {
+                font-size: 16px;
+            }
+
+            .arrow {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="tracker">
         <div class="button-container">
-            <button onclick="location.href='https://docs.google.com/spreadsheets/d/e/2PACX-1vRjVGNrhTe1rBZSwSJlG-rrM0FDTtwSZ6Ra89hsRFW8V-CjPHQtLafUBByQYFlO9z6z_POQHS7VrJ-f/pubhtml?widget=true&amp;headers=false'">See Daily Scores</button>
-            <button onclick="location.reload()">Submit Daily Scores</button>
+            <button onclick="window.open('https://docs.google.com/spreadsheets/d/e/2PACX-1vRjVGNrhTe1rBZSwSJlG-rrM0FDTtwSZ6Ra89hsRFW8V-CjPHQtLafUBByQYFlO9z6z_POQHS7VrJ-f/pubhtml', '_blank')">Go to Dashboard</button>
         </div>
 
         <!-- Zero Everything Out Button -->
