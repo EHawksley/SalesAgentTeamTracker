@@ -375,25 +375,24 @@
                 commissionEarned
             };
 
-            fetch('https://script.google.com/macros/s/AKfycbwFDXlkkSfPD7etwBVfCoEpMz894v7DMS5mKMI-cmxNLYGnbfI_GWCzdSKHBjsi2u7Y/exec', {
-                method: 'POST',
-                mode: 'no-cors',  // Bypass CORS issue
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = `Submission Successful! Submitted on ${date} at ${time}.`;
-                statusMessage.style.color = "green";
-            })
-            .catch(error => {
-                const statusMessage = document.getElementById('statusMessage');
-                statusMessage.textContent = 'Submission failed. Please try again.';
-                statusMessage.style.color = "red";
-                console.error('Error:', error);
-            });
+               fetch('https://script.google.com/macros/s/AKfycbwFDXlkkSfPD7etwBVfCoEpMz894v7DMS5mKMI-cmxNLYGnbfI_GWCzdSKHBjsi2u7Y/exec', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())  // Parse JSON response (if CORS is set up properly)
+        .then(result => {
+            document.getElementById('statusMessage').textContent = `Submission Successful: ${result.message}`;
+            document.getElementById('statusMessage').style.color = 'green';
+        })
+        .catch(error => {
+            document.getElementById('statusMessage').textContent = 'Submission failed. Please try again.';
+            document.getElementById('statusMessage').style.color = 'red';
+            console.error('Error:', error);
+        });
+
         }
     </script>
 
