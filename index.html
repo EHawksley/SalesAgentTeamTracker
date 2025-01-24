@@ -376,22 +376,33 @@
             };
 
                fetch('https://script.google.com/macros/s/AKfycbwFDXlkkSfPD7etwBVfCoEpMz894v7DMS5mKMI-cmxNLYGnbfI_GWCzdSKHBjsi2u7Y/exec', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())  // Parse JSON response (if CORS is set up properly)
-        .then(result => {
-            document.getElementById('statusMessage').textContent = `Submission Successful: ${result.message}`;
-            document.getElementById('statusMessage').style.color = 'green';
-        })
-        .catch(error => {
-            document.getElementById('statusMessage').textContent = 'Submission failed. Please try again.';
-            document.getElementById('statusMessage').style.color = 'red';
-            console.error('Error:', error);
-        });
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        name: document.getElementById('name').value,
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        calls: parseInt(document.getElementById('calls').textContent),
+        contacts: parseInt(document.getElementById('contacts').textContent),
+        appointmentsSet: parseInt(document.getElementById('appointmentsSet').textContent),
+        appointmentsComplete: parseInt(document.getElementById('appointmentsComplete').textContent),
+        listingsTaken: parseInt(document.getElementById('listingsTaken').textContent),
+        underContract: parseInt(document.getElementById('underContract').textContent),
+        closedDeals: parseInt(document.getElementById('closedDeals').textContent),
+        commissionEarned: document.getElementById('commissionEarned').value
+    })
+})
+.then(response => response.json())
+.then(result => {
+    console.log(result);
+    document.getElementById('statusMessage').textContent = result.message;
+})
+.catch(error => {
+    console.error('Error:', error);
+    document.getElementById('statusMessage').textContent = 'Submission failed. Please try again.';
+});
 
         }
     </script>
