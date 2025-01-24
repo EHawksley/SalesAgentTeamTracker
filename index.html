@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Tracker</title>
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start; /* Changed to flex-start */
-        height: auto; /* Changed to auto */
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 20px 0; /* Added padding to give space at the top */
-    }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: auto;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px 0;
+        }
 
         .tracker {
             display: flex;
             flex-direction: column;
             gap: 20px;
             width: 100%;
-            max-width: 400px; /* Restricting max width for larger screens */
+            max-width: 400px;
             padding: 20px;
             background-color: white;
             border-radius: 10px;
@@ -54,11 +54,11 @@
             padding: 10px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #dc3545; /* Bootstrap red */
+            background-color: #dc3545;
             color: white;
             border: none;
             border-radius: 5px;
-            margin-bottom: 10px; /* Add space below the button */
+            margin-bottom: 10px;
         }
 
         .tracker-item {
@@ -71,51 +71,24 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            justify-content: center; /* Center controls */
+            justify-content: center;
         }
 
         .tracker-item span {
             font-size: 18px;
             flex: 1;
-            text-align: left; /* Align label text to the left */
-        }
-
-        .arrow {
-            font-size: 24px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            transition: transform 0.1s; /* Transition for smooth scaling */
-            outline: none; /* Remove focus outline */
-        }
-
-        .arrow.up {
-            color: green;
-        }
-
-        .arrow.down {
-            color: red;
-        }
-
-        .arrow.enlarged {
-            transform: scale(1.5); /* Enlarge on click */
-        }
-
-        /* Remove blue highlighting on hover */
-        .arrow:hover {
-            background: none; /* No background on hover */
-            outline: none; /* No outline on hover */
+            text-align: left;
         }
 
         input[type="text"],
         select {
             width: 100%;
-            max-width: 200px; /* Set a max width for inputs and selects */
+            max-width: 200px;
             font-size: 16px;
             padding: 8px;
             margin-top: 10px;
             box-sizing: border-box;
-            text-align: center; /* Center the input text */
+            text-align: center;
         }
 
         .submit-container {
@@ -129,54 +102,30 @@
             font-size: 18px;
             text-align: center;
         }
-
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .tracker {
-                gap: 15px;
-            }
-
-            .tracker-item span {
-                font-size: 16px;
-            }
-
-            .arrow {
-                font-size: 20px;
-            }
-
-            button {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
     </style>
 </head>
 <body>
-
     <div class="tracker">
         <div class="button-container">
             <button onclick="window.open('https://docs.google.com/spreadsheets/d/e/2PACX-1vRjVGNrhTe1rBZSwSJlG-rrM0FDTtwSZ6Ra89hsRFW8V-CjPHQtLafUBByQYFlO9z6z_POQHS7VrJ-f/pubhtml', '_blank')">Go to Dashboard</button>
         </div>
 
-        <!-- Zero Everything Out Button -->
         <button class="reset-button" onclick="resetData()">Zero Everything Out</button>
 
-        <!-- Name Dropdown -->
         <div class="tracker-item">
             <span>Select Name</span>
-          <select id="name" onchange="saveData()">
-               <option value="" selected disabled>Select a Name</option>
-               <option value="Kody & Tori">Kody & Tori</option>
-               <option value="Evan">Evan</option>
-               <option value="Derek">Derek</option>
-               <option value="Paul">Paul</option>
-               <option value="Katie">Katie</option>
-               <option value="Zac">Zac</option>
-               <option value="Natalie">Natalie</option>
-          </select>
+            <select id="name" onchange="saveData()">
+                <option value="" selected disabled>Select a Name</option>
+                <option value="Kody & Tori">Kody & Tori</option>
+                <option value="Evan">Evan</option>
+                <option value="Derek">Derek</option>
+                <option value="Paul">Paul</option>
+                <option value="Katie">Katie</option>
+                <option value="Zac">Zac</option>
+                <option value="Natalie">Natalie</option>
+            </select>
         </div>
 
-        <!-- Calls -->
         <div class="tracker-item">
             <span>Calls</span>
             <div class="controls">
@@ -186,7 +135,6 @@
             </div>
         </div>
 
-        <!-- Contacts -->
         <div class="tracker-item">
             <span>Contacts</span>
             <div class="controls">
@@ -196,217 +144,54 @@
             </div>
         </div>
 
-        <!-- Appointments Set -->
-        <div class="tracker-item">
-            <span>Appointments Set</span>
-            <div class="controls">
-                <button class="arrow up" onclick="increment('appointmentsSet', this)">▲</button>
-                <span id="appointmentsSet">0</span>
-                <button class="arrow down" onclick="decrement('appointmentsSet', this)">▼</button>
-            </div>
-        </div>
+        <!-- Add other tracker items here -->
 
-        <!-- Appointments Complete -->
-        <div class="tracker-item">
-            <span>Appointments Complete</span>
-            <div class="controls">
-                <button class="arrow up" onclick="increment('appointmentsComplete', this)">▲</button>
-                <span id="appointmentsComplete">0</span>
-                <button class="arrow down" onclick="decrement('appointmentsComplete', this)">▼</button>
-            </div>
-        </div>
-
-        <!-- Listings Taken -->
-        <div class="tracker-item">
-            <span>Listings Taken</span>
-            <div class="controls">
-                <button class="arrow up" onclick="increment('listingsTaken', this)">▲</button>
-                <span id="listingsTaken">0</span>
-                <button class="arrow down" onclick="decrement('listingsTaken', this)">▼</button>
-            </div>
-        </div>
-
-        <!-- Under Contract -->
-        <div class="tracker-item">
-            <span>Under Contract</span>
-            <div class="controls">
-                <button class="arrow up" onclick="increment('underContract', this)">▲</button>
-                <span id="underContract">0</span>
-                <button class="arrow down" onclick="decrement('underContract', this)">▼</button>
-            </div>
-        </div>
-
-        <!-- Closed Deals -->
-        <div class="tracker-item">
-            <span>Closed Deals</span>
-            <div class="controls">
-                <button class="arrow up" onclick="increment('closedDeals', this)">▲</button>
-                <span id="closedDeals">0</span>
-                <button class="arrow down" onclick="decrement('closedDeals', this)">▼</button>
-            </div>
-        </div>
-
-        <!-- Commission Earned -->
-        <div class="tracker-item">
-            <span>Commission Earned</span>
-            <input type="text" id="commissionEarned" placeholder="Enter Amount" onblur="formatCurrency(this)" oninput="saveData()">
-        </div>
-
-        <!-- Submit Button -->
         <div class="submit-container">
             <button onclick="submitData()">Submit</button>
         </div>
 
-        <!-- Status Message -->
         <div id="statusMessage"></div>
-
     </div>
 
     <script>
-        // Load saved data from localStorage
-        window.onload = function() {
-            const savedData = JSON.parse(localStorage.getItem('trackerData')) || {};
-            document.getElementById('calls').textContent = savedData.calls || 0;
-            document.getElementById('contacts').textContent = savedData.contacts || 0;
-            document.getElementById('appointmentsSet').textContent = savedData.appointmentsSet || 0;
-            document.getElementById('appointmentsComplete').textContent = savedData.appointmentsComplete || 0;
-            document.getElementById('listingsTaken').textContent = savedData.listingsTaken || 0;
-            document.getElementById('underContract').textContent = savedData.underContract || 0;
-            document.getElementById('closedDeals').textContent = savedData.closedDeals || 0;
-            document.getElementById('commissionEarned').value = savedData.commissionEarned || '';
-            document.getElementById('name').value = savedData.name || ''; // Default to blank
-        };
-
         function saveData() {
             const data = {
                 calls: document.getElementById('calls').textContent,
                 contacts: document.getElementById('contacts').textContent,
-                appointmentsSet: document.getElementById('appointmentsSet').textContent,
-                appointmentsComplete: document.getElementById('appointmentsComplete').textContent,
-                listingsTaken: document.getElementById('listingsTaken').textContent,
-                underContract: document.getElementById('underContract').textContent,
-                closedDeals: document.getElementById('closedDeals').textContent,
-                commissionEarned: document.getElementById('commissionEarned').value,
-                name: document.getElementById('name').value,
+                name: document.getElementById('name').value
             };
             localStorage.setItem('trackerData', JSON.stringify(data));
         }
 
-        function resetData() {
-            if (confirm("Are you sure you want to reset all data? This action cannot be undone.")) {
-                document.getElementById('calls').textContent = 0;
-                document.getElementById('contacts').textContent = 0;
-                document.getElementById('appointmentsSet').textContent = 0;
-                document.getElementById('appointmentsComplete').textContent = 0;
-                document.getElementById('listingsTaken').textContent = 0;
-                document.getElementById('underContract').textContent = 0;
-                document.getElementById('closedDeals').textContent = 0;
-                document.getElementById('commissionEarned').value = '';
-                
-                // Clear localStorage
-                localStorage.removeItem('trackerData');
-            }
-        }
-
-        function increment(id, button) {
-            const element = document.getElementById(id);
-            let value = parseInt(element.textContent);
-            element.textContent = value + 1;
-            enlargeButton(button);
-            saveData(); // Save data after increment
-        }
-
-        function decrement(id, button) {
-            const element = document.getElementById(id);
-            let value = parseInt(element.textContent);
-            if (value > 0) {
-                element.textContent = value - 1;
-                enlargeButton(button);
-                saveData(); // Save data after decrement
-            }
-        }
-
-        function enlargeButton(button) {
-            button.classList.add('enlarged');
-            setTimeout(() => {
-                button.classList.remove('enlarged');
-            }, 100); // Duration for the enlargement effect
-        }
-
-        function formatCurrency(input) {
-            let value = input.value.replace(/[^0-9.]/g, ''); // Allow decimal points
-            if (value) {
-                const numberValue = parseFloat(value);
-                input.value = '$' + numberValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            } else {
-                input.value = '';
-            }
-            saveData(); // Save data after formatting
-        }
-
         function submitData() {
-            const name = document.getElementById('name').value;
-            const calls = document.getElementById('calls').textContent;
-            const contacts = document.getElementById('contacts').textContent;
-            const appointmentsSet = document.getElementById('appointmentsSet').textContent;
-            const appointmentsComplete = document.getElementById('appointmentsComplete').textContent;
-            const listingsTaken = document.getElementById('listingsTaken').textContent;
-            const underContract = document.getElementById('underContract').textContent;
-            const closedDeals = document.getElementById('closedDeals').textContent;
-            const commissionEarned = document.getElementById('commissionEarned').value;
-
-            // Get the current date and time
-            const currentDate = new Date();
-            const date = currentDate.toLocaleDateString();
-            const time = currentDate.toLocaleTimeString();
-
-            // Send this data to Google Sheets (or a backend)
             const data = {
-                name,
-                date,
-                time,
-                calls,
-                contacts,
-                appointmentsSet,
-                appointmentsComplete,
-                listingsTaken,
-                underContract,
-                closedDeals,
-                commissionEarned
+                name: document.getElementById('name').value,
+                calls: document.getElementById('calls').textContent,
+                contacts: document.getElementById('contacts').textContent,
             };
 
-               fetch('https://script.google.com/macros/s/AKfycbwFDXlkkSfPD7etwBVfCoEpMz894v7DMS5mKMI-cmxNLYGnbfI_GWCzdSKHBjsi2u7Y/exec', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        name: document.getElementById('name').value,
-        date: new Date().toLocaleDateString(),
-        time: new Date().toLocaleTimeString(),
-        calls: parseInt(document.getElementById('calls').textContent),
-        contacts: parseInt(document.getElementById('contacts').textContent),
-        appointmentsSet: parseInt(document.getElementById('appointmentsSet').textContent),
-        appointmentsComplete: parseInt(document.getElementById('appointmentsComplete').textContent),
-        listingsTaken: parseInt(document.getElementById('listingsTaken').textContent),
-        underContract: parseInt(document.getElementById('underContract').textContent),
-        closedDeals: parseInt(document.getElementById('closedDeals').textContent),
-        commissionEarned: document.getElementById('commissionEarned').value
-    })
-})
-.then(response => response.json())
-.then(result => {
-    console.log(result);
-    document.getElementById('statusMessage').textContent = result.message;
-})
-.catch(error => {
-    console.error('Error:', error);
-    document.getElementById('statusMessage').textContent = 'Submission failed. Please try again.';
-});
+            fetch('https://script.google.com/macros/s/AKfycbwFDXlkkSfPD7etwBVfCoEpMz894v7DMS5mKMI-cmxNLYGnbfI_GWCzdSKHBjsi2u7Y/exec', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('statusMessage').textContent = result.message;
+                document.getElementById('statusMessage').style.color = 'green';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('statusMessage').textContent = 'Submission failed. Please try again.';
+                document.getElementById('statusMessage').style.color = 'red';
+            });
+        }
 
+        function resetData() {
+            document.getElementById('calls').textContent = 0;
+            document.getElementById('contacts').textContent = 0;
+            localStorage.removeItem('trackerData');
         }
     </script>
-
 </body>
 </html>
-
